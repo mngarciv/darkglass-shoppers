@@ -45,12 +45,22 @@ export function Nav() {
           </div>
         </form>
 
-        <button
-          onClick={() => cart.open()}
-          className="mono text-[10px] uppercase tracking-[0.2em] px-4 py-2 glass glass-hover shrink-0"
-        >
-          Carrito <span className="text-foreground/60">[{count}]</span>
-        </button>
+        <div className="flex items-center gap-2 shrink-0">
+          <Link
+            to="/cuenta"
+            className="mono text-[10px] uppercase tracking-[0.2em] px-3 py-2 glass glass-hover flex items-center gap-2"
+            aria-label="Cuenta"
+          >
+            <User className="w-3 h-3" />
+            <span className="hidden sm:inline">Cuenta</span>
+          </Link>
+          <button
+            onClick={() => cart.open()}
+            className="mono text-[10px] uppercase tracking-[0.2em] px-4 py-2 glass glass-hover"
+          >
+            Carrito <span className="text-foreground/60">[{count}]</span>
+          </button>
+        </div>
       </div>
     </nav>
   );
