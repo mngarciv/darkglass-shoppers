@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { SlidersHorizontal, X } from "lucide-react";
 import { Nav } from "@/components/Nav";
+import { Footer } from "@/components/Footer";
 import { products, formatPrice, BRAND } from "@/lib/products";
 
 type IndexSearch = { q?: string };
