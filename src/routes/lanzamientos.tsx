@@ -101,6 +101,7 @@ function LanzamientosPage() {
           </ol>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }
