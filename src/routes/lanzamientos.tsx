@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Nav } from "@/components/Nav";
+import { Footer } from "@/components/Footer";
 import { products, formatPrice } from "@/lib/products";
 
 export const Route = createFileRoute("/lanzamientos")({
