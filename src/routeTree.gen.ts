@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LanzamientosRouteImport } from './routes/lanzamientos'
+import { Route as DiarioRouteImport } from './routes/diario'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductoIdRouteImport } from './routes/producto.$id'
 
 const LanzamientosRoute = LanzamientosRouteImport.update({
   id: '/lanzamientos',
   path: '/lanzamientos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DiarioRoute = DiarioRouteImport.update({
+  id: '/diario',
+  path: '/diario',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -31,30 +37,34 @@ const ProductoIdRoute = ProductoIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/diario': typeof DiarioRoute
   '/lanzamientos': typeof LanzamientosRoute
   '/producto/$id': typeof ProductoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/diario': typeof DiarioRoute
   '/lanzamientos': typeof LanzamientosRoute
   '/producto/$id': typeof ProductoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/diario': typeof DiarioRoute
   '/lanzamientos': typeof LanzamientosRoute
   '/producto/$id': typeof ProductoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/lanzamientos' | '/producto/$id'
+  fullPaths: '/' | '/diario' | '/lanzamientos' | '/producto/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/lanzamientos' | '/producto/$id'
-  id: '__root__' | '/' | '/lanzamientos' | '/producto/$id'
+  to: '/' | '/diario' | '/lanzamientos' | '/producto/$id'
+  id: '__root__' | '/' | '/diario' | '/lanzamientos' | '/producto/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DiarioRoute: typeof DiarioRoute
   LanzamientosRoute: typeof LanzamientosRoute
   ProductoIdRoute: typeof ProductoIdRoute
 }
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/lanzamientos'
       fullPath: '/lanzamientos'
       preLoaderRoute: typeof LanzamientosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/diario': {
+      id: '/diario'
+      path: '/diario'
+      fullPath: '/diario'
+      preLoaderRoute: typeof DiarioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DiarioRoute: DiarioRoute,
   LanzamientosRoute: LanzamientosRoute,
   ProductoIdRoute: ProductoIdRoute,
 }
