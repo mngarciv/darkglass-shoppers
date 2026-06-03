@@ -11,7 +11,6 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { CartSheet } from "@/components/CartSheet";
 
 function NotFoundComponent() {
   return (
@@ -79,12 +78,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "SASSY SNKRS — Premium Sneakers" },
-      { name: "description", content: "Curaduría premium de zapatillas." },
-      { property: "og:title", content: "SASSY SNKRS" },
-      { property: "og:description", content: "Curaduría premium de zapatillas." },
+      { name: "description", content: "premium de zapatillas." },
+      { property: "og:title", content: "SASSY SNKRS — Premium Sneakers" },
+      { property: "og:description", content: "premium de zapatillas." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "SASSY SNKRS — Premium Sneakers" },
+      { name: "twitter:description", content: "premium de zapatillas." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8c7a073b-2e0f-4f70-b3e6-8264f08b0607/id-preview-40a89a85--aea35c85-b3cb-4c1f-8cfa-7f7b60e2043f.lovable.app-1780452505159.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8c7a073b-2e0f-4f70-b3e6-8264f08b0607/id-preview-40a89a85--aea35c85-b3cb-4c1f-8cfa-7f7b60e2043f.lovable.app-1780452505159.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -120,7 +123,6 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
-      <CartSheet />
     </QueryClientProvider>
   );
 }
