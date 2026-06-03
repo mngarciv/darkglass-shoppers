@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LanzamientosRouteImport } from './routes/lanzamientos'
 import { Route as DiarioRouteImport } from './routes/diario'
+import { Route as CuentaRouteImport } from './routes/cuenta'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductoIdRouteImport } from './routes/producto.$id'
 
@@ -22,6 +23,11 @@ const LanzamientosRoute = LanzamientosRouteImport.update({
 const DiarioRoute = DiarioRouteImport.update({
   id: '/diario',
   path: '/diario',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CuentaRoute = CuentaRouteImport.update({
+  id: '/cuenta',
+  path: '/cuenta',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,12 +43,14 @@ const ProductoIdRoute = ProductoIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cuenta': typeof CuentaRoute
   '/diario': typeof DiarioRoute
   '/lanzamientos': typeof LanzamientosRoute
   '/producto/$id': typeof ProductoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cuenta': typeof CuentaRoute
   '/diario': typeof DiarioRoute
   '/lanzamientos': typeof LanzamientosRoute
   '/producto/$id': typeof ProductoIdRoute
@@ -50,20 +58,28 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cuenta': typeof CuentaRoute
   '/diario': typeof DiarioRoute
   '/lanzamientos': typeof LanzamientosRoute
   '/producto/$id': typeof ProductoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/diario' | '/lanzamientos' | '/producto/$id'
+  fullPaths: '/' | '/cuenta' | '/diario' | '/lanzamientos' | '/producto/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/diario' | '/lanzamientos' | '/producto/$id'
-  id: '__root__' | '/' | '/diario' | '/lanzamientos' | '/producto/$id'
+  to: '/' | '/cuenta' | '/diario' | '/lanzamientos' | '/producto/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/cuenta'
+    | '/diario'
+    | '/lanzamientos'
+    | '/producto/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CuentaRoute: typeof CuentaRoute
   DiarioRoute: typeof DiarioRoute
   LanzamientosRoute: typeof LanzamientosRoute
   ProductoIdRoute: typeof ProductoIdRoute
@@ -85,6 +101,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DiarioRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cuenta': {
+      id: '/cuenta'
+      path: '/cuenta'
+      fullPath: '/cuenta'
+      preLoaderRoute: typeof CuentaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +127,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CuentaRoute: CuentaRoute,
   DiarioRoute: DiarioRoute,
   LanzamientosRoute: LanzamientosRoute,
   ProductoIdRoute: ProductoIdRoute,
@@ -111,3 +135,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
