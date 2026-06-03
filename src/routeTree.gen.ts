@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LanzamientosRouteImport } from './routes/lanzamientos'
 import { Route as CarritoRouteImport } from './routes/carrito'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductoIdRouteImport } from './routes/producto.$id'
 
+const LanzamientosRoute = LanzamientosRouteImport.update({
+  id: '/lanzamientos',
+  path: '/lanzamientos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CarritoRoute = CarritoRouteImport.update({
   id: '/carrito',
   path: '/carrito',
@@ -32,35 +38,46 @@ const ProductoIdRoute = ProductoIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/carrito': typeof CarritoRoute
+  '/lanzamientos': typeof LanzamientosRoute
   '/producto/$id': typeof ProductoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/carrito': typeof CarritoRoute
+  '/lanzamientos': typeof LanzamientosRoute
   '/producto/$id': typeof ProductoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/carrito': typeof CarritoRoute
+  '/lanzamientos': typeof LanzamientosRoute
   '/producto/$id': typeof ProductoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/carrito' | '/producto/$id'
+  fullPaths: '/' | '/carrito' | '/lanzamientos' | '/producto/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/carrito' | '/producto/$id'
-  id: '__root__' | '/' | '/carrito' | '/producto/$id'
+  to: '/' | '/carrito' | '/lanzamientos' | '/producto/$id'
+  id: '__root__' | '/' | '/carrito' | '/lanzamientos' | '/producto/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CarritoRoute: typeof CarritoRoute
+  LanzamientosRoute: typeof LanzamientosRoute
   ProductoIdRoute: typeof ProductoIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/lanzamientos': {
+      id: '/lanzamientos'
+      path: '/lanzamientos'
+      fullPath: '/lanzamientos'
+      preLoaderRoute: typeof LanzamientosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/carrito': {
       id: '/carrito'
       path: '/carrito'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CarritoRoute: CarritoRoute,
+  LanzamientosRoute: LanzamientosRoute,
   ProductoIdRoute: ProductoIdRoute,
 }
 export const routeTree = rootRouteImport
