@@ -269,12 +269,7 @@ function Index() {
         </div>
       </section>
 
-      <footer className="px-6 md:px-10 py-12 border-t border-border">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-6">
-          <p className="mono text-[10px] uppercase text-muted-foreground">© 2026 {BRAND}</p>
-          <p className="mono text-[10px] uppercase text-muted-foreground">Santiago — Buenos Aires</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
