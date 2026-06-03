@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Search } from "lucide-react";
+import { Search, User } from "lucide-react";
 import { cart, useCartCount } from "@/lib/cart";
 import { BRAND } from "@/lib/products";
 
@@ -28,7 +28,9 @@ export function Nav() {
           <Link to="/lanzamientos" className="mono text-[10px] uppercase text-muted-foreground hover:text-foreground transition-colors" activeProps={{ className: "mono text-[10px] uppercase text-foreground" }}>
             Lanzamientos
           </Link>
-          <span className="mono text-[10px] uppercase text-muted-foreground/40">Marcas</span>
+          <Link to="/diario" className="mono text-[10px] uppercase text-muted-foreground hover:text-foreground transition-colors" activeProps={{ className: "mono text-[10px] uppercase text-foreground" }}>
+            Diario
+          </Link>
         </div>
 
         <form onSubmit={submit} className="flex-1 max-w-sm hidden md:flex">
@@ -43,12 +45,22 @@ export function Nav() {
           </div>
         </form>
 
-        <button
-          onClick={() => cart.open()}
-          className="mono text-[10px] uppercase tracking-[0.2em] px-4 py-2 glass glass-hover shrink-0"
-        >
-          Carrito <span className="text-foreground/60">[{count}]</span>
-        </button>
+        <div className="flex items-center gap-2 shrink-0">
+          <Link
+            to="/cuenta"
+            className="mono text-[10px] uppercase tracking-[0.2em] px-3 py-2 glass glass-hover flex items-center gap-2"
+            aria-label="Cuenta"
+          >
+            <User className="w-3 h-3" />
+            <span className="hidden sm:inline">Cuenta</span>
+          </Link>
+          <button
+            onClick={() => cart.open()}
+            className="mono text-[10px] uppercase tracking-[0.2em] px-4 py-2 glass glass-hover"
+          >
+            Carrito <span className="text-foreground/60">[{count}]</span>
+          </button>
+        </div>
       </div>
     </nav>
   );

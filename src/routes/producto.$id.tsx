@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { Nav } from "@/components/Nav";
+import { Footer } from "@/components/Footer";
 import { getProduct, formatPrice, products } from "@/lib/products";
 import { cart } from "@/lib/cart";
 
@@ -151,6 +152,7 @@ function ProductPage() {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }
