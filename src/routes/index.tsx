@@ -1,15 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { z } from "zod";
-import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { Nav } from "@/components/Nav";
 import { products, formatPrice, BRAND } from "@/lib/products";
 
-const searchSchema = z.object({
-  q: fallback(z.string().optional(), undefined),
-});
+type IndexSearch = { q?: string };
 
 export const Route = createFileRoute("/")({
-  validateSearch: zodValidator(searchSchema),
+  validateSearch: (s: Record<string, unknown>): IndexSearch => ({
+    q: typeof s.q === "string" && s.q.length > 0 ? s.q : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "SASSY SNKRS — Curated Premium Sneakers" },

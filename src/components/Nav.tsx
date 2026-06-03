@@ -1,23 +1,17 @@
-import { Link, useNavigate, useSearch } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 import { Search } from "lucide-react";
 import { useCartCount } from "@/lib/cart";
 import { BRAND } from "@/lib/products";
 
-export function Nav({ showSearch = true }: { showSearch?: boolean }) {
+export function Nav() {
   const count = useCartCount();
   const navigate = useNavigate();
-  // Read q only when on index route
-  const search = useSearch({ strict: false }) as { q?: string };
-  const [q, setQ] = useState(search?.q ?? "");
-
-  useEffect(() => {
-    setQ(search?.q ?? "");
-  }, [search?.q]);
+  const [q, setQ] = useState("");
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate({ to: "/", search: { q: q || undefined } as any });
+    navigate({ to: "/", search: { q: q.trim() || undefined } as any });
   };
 
   return (
@@ -37,19 +31,17 @@ export function Nav({ showSearch = true }: { showSearch?: boolean }) {
           <span className="mono text-[10px] uppercase text-muted-foreground/40">Marcas</span>
         </div>
 
-        {showSearch && (
-          <form onSubmit={submit} className="flex-1 max-w-sm hidden md:flex">
-            <div className="glass flex items-center gap-2 px-3 py-2 w-full focus-within:border-white/20 transition-colors">
-              <Search className="w-3.5 h-3.5 text-muted-foreground" />
-              <input
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                placeholder="Buscar marca, silueta…"
-                className="mono text-[11px] bg-transparent outline-none w-full placeholder:text-muted-foreground/60 text-foreground"
-              />
-            </div>
-          </form>
-        )}
+        <form onSubmit={submit} className="flex-1 max-w-sm hidden md:flex">
+          <div className="glass flex items-center gap-2 px-3 py-2 w-full focus-within:border-white/20 transition-colors">
+            <Search className="w-3.5 h-3.5 text-muted-foreground" />
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Buscar marca, silueta…"
+              className="mono text-[11px] bg-transparent outline-none w-full placeholder:text-muted-foreground/60 text-foreground"
+            />
+          </div>
+        </form>
 
         <Link to="/carrito" className="mono text-[10px] uppercase tracking-[0.2em] px-4 py-2 glass glass-hover shrink-0">
           Carrito <span className="text-foreground/60">[{count}]</span>
