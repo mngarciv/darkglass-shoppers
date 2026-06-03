@@ -28,7 +28,9 @@ export function Nav() {
           <Link to="/lanzamientos" className="mono text-[10px] uppercase text-muted-foreground hover:text-foreground transition-colors" activeProps={{ className: "mono text-[10px] uppercase text-foreground" }}>
             Lanzamientos
           </Link>
-          <span className="mono text-[10px] uppercase text-muted-foreground/40">Marcas</span>
+          <Link to="/diario" className="mono text-[10px] uppercase text-muted-foreground hover:text-foreground transition-colors" activeProps={{ className: "mono text-[10px] uppercase text-foreground" }}>
+            Diario
+          </Link>
         </div>
 
         <form onSubmit={submit} className="flex-1 max-w-sm hidden md:flex">
