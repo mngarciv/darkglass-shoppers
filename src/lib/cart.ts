@@ -1,9 +1,10 @@
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
 
 export type CartItem = { id: string; talla: number; cantidad: number };
 
 const KEY = "carrito";
 const listeners = new Set<() => void>();
+const openListeners = new Set<() => void>();
 
 const read = (): CartItem[] => {
   if (typeof window === "undefined") return [];
@@ -42,6 +43,11 @@ export const cart = {
   subscribe(l: () => void) {
     listeners.add(l);
     return () => { listeners.delete(l); };
+  },
+  open() { openListeners.forEach((l) => l()); },
+  onOpen(l: () => void) {
+    openListeners.add(l);
+    return () => { openListeners.delete(l); };
   },
 };
 

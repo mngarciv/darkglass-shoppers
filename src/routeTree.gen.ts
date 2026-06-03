@@ -10,18 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LanzamientosRouteImport } from './routes/lanzamientos'
-import { Route as CarritoRouteImport } from './routes/carrito'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductoIdRouteImport } from './routes/producto.$id'
 
 const LanzamientosRoute = LanzamientosRouteImport.update({
   id: '/lanzamientos',
   path: '/lanzamientos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CarritoRoute = CarritoRouteImport.update({
-  id: '/carrito',
-  path: '/carrito',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,34 +31,30 @@ const ProductoIdRoute = ProductoIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/carrito': typeof CarritoRoute
   '/lanzamientos': typeof LanzamientosRoute
   '/producto/$id': typeof ProductoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/carrito': typeof CarritoRoute
   '/lanzamientos': typeof LanzamientosRoute
   '/producto/$id': typeof ProductoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/carrito': typeof CarritoRoute
   '/lanzamientos': typeof LanzamientosRoute
   '/producto/$id': typeof ProductoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/carrito' | '/lanzamientos' | '/producto/$id'
+  fullPaths: '/' | '/lanzamientos' | '/producto/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/carrito' | '/lanzamientos' | '/producto/$id'
-  id: '__root__' | '/' | '/carrito' | '/lanzamientos' | '/producto/$id'
+  to: '/' | '/lanzamientos' | '/producto/$id'
+  id: '__root__' | '/' | '/lanzamientos' | '/producto/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CarritoRoute: typeof CarritoRoute
   LanzamientosRoute: typeof LanzamientosRoute
   ProductoIdRoute: typeof ProductoIdRoute
 }
@@ -76,13 +66,6 @@ declare module '@tanstack/react-router' {
       path: '/lanzamientos'
       fullPath: '/lanzamientos'
       preLoaderRoute: typeof LanzamientosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/carrito': {
-      id: '/carrito'
-      path: '/carrito'
-      fullPath: '/carrito'
-      preLoaderRoute: typeof CarritoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -104,10 +87,19 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CarritoRoute: CarritoRoute,
   LanzamientosRoute: LanzamientosRoute,
   ProductoIdRoute: ProductoIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
