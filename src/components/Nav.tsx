@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Search } from "lucide-react";
-import { useCartCount } from "@/lib/cart";
+import { cart, useCartCount } from "@/lib/cart";
 import { BRAND } from "@/lib/products";
 
 export function Nav() {
@@ -15,7 +15,7 @@ export function Nav() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 glass-strong">
+    <nav className="sticky top-0 z-40 glass-strong">
       <div className="flex items-center justify-between gap-6 px-6 md:px-10 py-4">
         <Link to="/" className="font-display text-lg font-semibold tracking-[0.2em] uppercase text-foreground shrink-0">
           {BRAND}
@@ -43,9 +43,12 @@ export function Nav() {
           </div>
         </form>
 
-        <Link to="/carrito" className="mono text-[10px] uppercase tracking-[0.2em] px-4 py-2 glass glass-hover shrink-0">
+        <button
+          onClick={() => cart.open()}
+          className="mono text-[10px] uppercase tracking-[0.2em] px-4 py-2 glass glass-hover shrink-0"
+        >
           Carrito <span className="text-foreground/60">[{count}]</span>
-        </Link>
+        </button>
       </div>
     </nav>
   );

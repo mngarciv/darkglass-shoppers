@@ -34,6 +34,7 @@ function ProductPage() {
   const handleAdd = () => {
     if (!size) return;
     cart.add({ id: product.id, talla: size, cantidad: 1 });
+    cart.open();
     setAdded(true);
     setTimeout(() => setAdded(false), 1800);
   };
